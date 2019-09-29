@@ -47,12 +47,13 @@ steps:
     args:
       - ps
   - name: node:10.16.0
-    entrypoint: yarn
+    entrypoint: bash
     args:
-      - test
+      - yarn test || 0
   - name: docker/compose:1.15.0
     args:
       - logs
+      - --follow
   - name: gcr.io/cloud-builders/docker
     args:
       - push
