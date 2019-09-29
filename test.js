@@ -19,9 +19,30 @@ process.env.NODE_ENV = "staging";
 describe("Event store", () => {
   it("should return successfully", async () => {
     const root = uuid();
+    const topic = "some-topic";
+    const version = 0;
+    const created = "now";
+    const id = "some-id";
+    const action = "some-action";
+    const domain = "some-domain";
+    const service = "some-service";
+    const network = "some-network";
+    const issued = "now";
+
     const response0 = await request.post(url, {
       headers: {
-        root
+        root,
+        topic,
+        version,
+        created,
+        command: {
+          id,
+          action,
+          domain,
+          service,
+          network,
+          issued
+        }
       },
       payload: {
         name: "some-name"
@@ -38,7 +59,18 @@ describe("Event store", () => {
 
     const response2 = await request.post(url, {
       headers: {
-        root
+        root,
+        topic,
+        version,
+        created,
+        command: {
+          id,
+          action,
+          domain,
+          service,
+          network,
+          issued
+        }
       },
       payload: {
         name: "some-other-name"
