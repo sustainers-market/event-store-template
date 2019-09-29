@@ -1,4 +1,5 @@
 const { expect } = require("chai");
+const uuid = require("@sustainers/uuid");
 
 const request = require("@sustainers/request");
 
@@ -15,33 +16,40 @@ process.env.NODE_ENV = "staging";
  *
  */
 describe("Event store", () => {
-  // const id = "some-id";
-  // it("should return successfully", async () => {
-  //   const response0 = await request.put(`${url}/${id}`, {
-  //     name: "some-name"
-  //   });
-  //   expect(response0.statusCode).to.equal(200);
-  //   expect(JSON.parse(response0.body).name).to.equal("some-name");
-  //   const response1 = await request.put(`${url}/${id}`, {
-  //     name: "some-other-name"
-  //   });
-  //   expect(response1.statusCode).to.equal(200);
-  //   expect(JSON.parse(response1.body).name).to.equal("some-other-name");
-  //   const response2 = await request.get(`${url}/${id}`);
-  //   expect(response2.statusCode).to.equal(200);
-  //   expect(JSON.parse(response2.body).name).to.equal("some-other-name");
-  //   const response3 = await request.get(`${url}`);
-  //   expect(response3.statusCode).to.equal(200);
-  //   expect(JSON.parse(response3.body)[0].name).to.equal("some-other-name");
-  //   const response4 = await request.delete(`${url}/${id}`);
-  //   expect(response4.statusCode).to.equal(200);
-  //   expect(JSON.parse(response4.body).deletedCount).to.equal(1);
-  //   const response5 = await request.get(`${url}/${id}`);
-  //   expect(response5.statusCode).to.equal(200);
-  //   expect(response5.body).to.equal("");
+  it("should return successfully", async () => {
+    const root = uuid();
+    const response0 = await request.post(url, {
+      headers: {
+        root
+      },
+      payload: {
+        name: "some-name"
+      }
+    });
+    expect(response0.statusCode).to.equal(204);
+
+    const response1 = await request.get(`${url}/${root}`);
+
+    expect(response1.statusCode).to.equal(200);
+    expect(JSON.parse(response1.body).payload.name).to.equal("some-name");
+
+    const response2 = await request.post(url, {
+      headers: {
+        root
+      },
+      payload: {
+        name: "some-other-name"
+      }
+    });
+    expect(response2.statusCode).to.equal(204);
+
+    const response3 = await request.get(`${url}/${root}`);
+
+    expect(response3.statusCode).to.equal(200);
+    expect(JSON.parse(response1.body).payload.name).to.equal("some-other-name");
+  });
+  // it("should return an error if incorrect params", async () => {
+  //   const response = await request.post(url, { name: 1 });
+  //   expect(response.statusCode).to.be.at.least(400);
   // });
-  // // it("should return an error if incorrect params", async () => {
-  // //   const response = await request.post(url, { name: 1 });
-  // //   expect(response.statusCode).to.be.at.least(400);
-  // // });
 });

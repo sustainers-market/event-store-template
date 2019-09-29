@@ -23,6 +23,7 @@ devDependencies:
   prettier-eslint-cli: "^4.7.1"
   lint-staged: "^8.1.7"
   "@sustainers/request": "*"
+  "@sustainers/uuid": "*"
 lint-staged:
   "*.js":
     - eslint --fix
