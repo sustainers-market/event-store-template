@@ -7,6 +7,7 @@ name: "@sustainers/some-domain-event-store" # <--
 version: 0.0.0
 dependencies:
   "@sustainers/event-store": "*"
+  "@sustainers/logger": "*"
 main: index.js
 scripts:
   start: node index.js
