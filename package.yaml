@@ -1,0 +1,33 @@
+# TODO:
+#   Remove the comment arrow from the line following this comment and
+#   change the value so that it describes this repo's service.
+
+name: "@sustainers/some-domain-event-store" # <--
+
+version: 0.0.0
+dependencies:
+  "@sustainers/event-store": "*"
+main: index.js
+scripts:
+  start: node index.js
+  build: "./build.sh"
+  precommit: lint-staged
+  test: mocha --recursive  --timeout 10000
+devDependencies:
+  mocha: "^6.1.4"
+  chai: "^4.2.0"
+  eslint: "^5.16.0"
+  eslint-config-prettier: "^4.1.0"
+  eslint-plugin-import: "^2.17.2"
+  husky: "^1.3.1"
+  prettier-eslint-cli: "^4.7.1"
+  lint-staged: "^8.1.7"
+  "@sustainers/request": "*"
+lint-staged:
+  "*.js":
+    - eslint --fix
+    - prettier-eslint --write
+    - git add
+  "*.json":
+    - prettier-eslint --write
+    - git add
