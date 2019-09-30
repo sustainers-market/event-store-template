@@ -81,7 +81,7 @@ describe("Event store", () => {
     const response3 = await request.get(`${url}/${root}`);
 
     expect(response3.statusCode).to.equal(200);
-    expect(JSON.parse(response1.body).state.name).to.equal("some-other-name");
+    expect(JSON.parse(response2.body).state.name).to.equal("some-other-name");
   });
   // it("should return an error if incorrect params", async () => {
   //   const response = await request.post(url, { name: 1 });
